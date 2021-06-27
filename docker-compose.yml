@@ -1,0 +1,41 @@
+#----------------------------------------------------------------------
+# File: docker-compose.yml
+# Author: Gabriel Zacchi Braga (Owner)
+# Date: 23 jun 2021
+# Brief: docker-compose for ETL Python Service.
+#----------------------------------------------------------------------
+version: "3.9"
+
+#----------------------------------------------------------------------
+services:
+
+  application:
+    build: .
+    container_name: application
+    command: python src/main.py
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "5000:5000"
+    networks:
+      - service-net  
+    env_file:
+      - .env
+    depends_on: 
+      - database
+  
+  database:
+    container_name: target-db
+    image: postgres:13
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: localdev
+    ports:
+      - 5432:5432
+    networks:
+      - service-net      
+#----------------------------------------------------------------------
+networks:
+  service-net:
+    driver: bridge

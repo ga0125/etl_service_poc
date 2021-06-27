@@ -1,0 +1,9 @@
+# SQL tools dependencies
+SQLAlchemy==1.4.19
+psycopg2==2.9.1
+
+# Pandas tool
+pandas==1.2.5
+
+# Obsevability tools
+memory-profiler==0.58.0
