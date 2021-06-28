@@ -2,8 +2,6 @@
 SQLAlchemy==1.4.19
 psycopg2==2.9.1
 
-# Pandas tool
+# Utils
 pandas==1.2.5
-
-# Obsevability tools
-memory-profiler==0.58.0
+validate-docbr==1.8.2

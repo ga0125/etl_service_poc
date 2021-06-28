@@ -14,3 +14,9 @@ columns = [
     'most_frequent_store',
     'last_purchase_store'
 ]
+
+columns_to_filter = [
+    'cpf',
+    'most_frequent_store',
+    'last_purchase_store'
+]

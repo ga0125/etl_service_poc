@@ -5,6 +5,9 @@
 # Brief: Load module for ETL services.
 # ----------------------------------------------------------------------
 import os
+
+import psycopg2
+
 import pandas as pd
 
 from sqlalchemy import create_engine
@@ -29,6 +32,8 @@ class LoadDataClass:
             data_to_load (pd.Dataframe): Received Dataframe to load.
         """
         self.engine: Engine = create_engine(os.environ.get('DATABASE_URL'))
+        self.conn = psycopg2.connect(os.environ.get('DATABASE_URL'))
+        self.conn.autocommit = True
         self.data_to_load: pd.DataFrame = data_to_load
 
     def load(self) -> None:
@@ -40,11 +45,16 @@ class LoadDataClass:
         """
         try:
             # ------------------------------------
-            # Persit columns and its data to the DB.
+            # Create the purchase_table into the DB.
+            self._create_staging_table(self.conn.cursor())
+
+            # ------------------------------------
+            # Persit columns and its data into the created ta table.
             self.data_to_load.to_sql(
                 'purchase_data',
                 self.engine,
-                index=False
+                index=False,
+                if_exists='append'
             )
             logging.info('Data has been persisted on the database.')
 
@@ -60,3 +70,11 @@ class LoadDataClass:
         except Exception as e:
             logging.error(f'Generic error. LOG: {e}')
             raise GenericException(e)
+
+    def _create_staging_table(self, cursor: object) -> None:
+        """Create data table into DB according to the SQL script.
+
+        Args:
+            cursor (object): Cursor object from psycopg2
+        """
+        cursor.execute(open('src/sql_commands/create_table.sql', 'r').read())
