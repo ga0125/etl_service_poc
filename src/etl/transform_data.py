@@ -4,8 +4,6 @@
 # Date: 25 jun 2021
 # Brief: Transform module for ETL services.
 # ----------------------------------------------------------------------
-import re
-
 import pandas as pd
 
 from validate_docbr import CPF

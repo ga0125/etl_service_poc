@@ -12,7 +12,7 @@ Project created to persist a chunk of data into the database. The ETL service is
   - [Execution](#execution).
   - [Application credentials](#application-credentials).
   - [Project Structure](#project-structure).
-  - [Application Life-Cycle](#application-life-cycle).
+  - [Sequence Diagram](#sequence-diagram).
   - [Database Structure](#database-structure).
   - [Reference Articles](#reference-articles).
   - [RoadMap (To-Do)](#roadmap-to-do).
@@ -115,11 +115,11 @@ To run the application is required the following dependencies:
 ```
 ***
 
-## Application Life-cycle
+## Sequence Diagram
 
 The life-cycle application is based on ETL pattern. As you can check below, its a simple data-driven flow, but very effective and organized.
 
-![etl_lifecycle](docs/imgs/etl_lifecycle.png)
+![etl_sequence_diagram](docs/imgs/etl_sequence_diagram.png)
 
 ***
 

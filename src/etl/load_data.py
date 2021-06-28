@@ -58,15 +58,6 @@ class LoadDataClass:
             )
             logging.info('Data has been persisted on the database.')
 
-        # ------------------------------------
-        # Verify whether the table is already created and raises an exception if necessary.
-        except ValueError as e:
-            if 'already exists' in str(e):
-                logging.error('Table already exists.')
-                raise DataAlreadyPersisted()
-
-            raise GenericException(e)
-
         except Exception as e:
             logging.error(f'Generic error. LOG: {e}')
             raise GenericException(e)
