@@ -53,7 +53,7 @@ To run the application is required the following dependencies:
 
   1. Before to execute the commands below, change the name file from **example.env** to **.env**
   ```bash
-    mv example.env .env # run this command into the root path project
+    mv etl_service_poc/example.env  etl_service_poc/.env # run this command outside the root path of the project
   ```
 
   2. To build the application (Optional):
