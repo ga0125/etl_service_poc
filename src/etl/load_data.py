@@ -13,11 +13,8 @@ import pandas as pd
 from sqlalchemy import create_engine
 from sqlalchemy.engine.base import Engine
 
-from helpers.logging import logging
-from helpers.exceptions import (
-    GenericException,
-    DataAlreadyPersisted
-)
+from helpers.logging import logging, timed
+from helpers.exceptions import GenericException
 
 
 class LoadDataClass:
@@ -36,6 +33,7 @@ class LoadDataClass:
         self.conn.autocommit = True
         self.data_to_load: pd.DataFrame = data_to_load
 
+    @timed
     def load(self) -> None:
         """Load main method
 
@@ -62,6 +60,7 @@ class LoadDataClass:
             logging.error(f'Generic error. LOG: {e}')
             raise GenericException(e)
 
+    @timed
     def _create_staging_table(self, cursor: object) -> None:
         """Create data table into DB according to the SQL script.
 

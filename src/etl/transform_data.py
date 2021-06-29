@@ -4,9 +4,13 @@
 # Date: 25 jun 2021
 # Brief: Transform module for ETL services.
 # ----------------------------------------------------------------------
+import re
+
 import pandas as pd
 
 from validate_docbr import CPF
+
+from helpers.logging import timed
 
 from helpers.logging import logging
 from helpers.constants import columns_to_filter
@@ -26,7 +30,11 @@ class TransformDataClass:
         """
         self.data: pd.DataFrame = data
         self.cpf_handler = CPF()
+        # ------------------------------------
+        # compile regex to improve the execution performance
+        self.regex = re.compile(r'\D+')
 
+    @timed
     def _char_handler(self, columns: list, df: pd.DataFrame) -> pd.DataFrame:
         """Clear NaN characters from the received columns.
 
@@ -37,14 +45,14 @@ class TransformDataClass:
         Returns:
             pd.DataFrame: [description]
         """
-        df.loc[:, columns] = df.loc[:, columns].replace(
-            to_replace=r'\D+',
-            value='',
-            regex=True
-        )
 
+        with pd.option_context('mode.chained_assignment', None):
+            for column in columns:
+                df[column] = [self.regex.sub('', x)
+                              for x in df[column].tolist()]
         return df
 
+    @timed
     def transform(self) -> pd.DataFrame:
         """Transform main method
 

@@ -9,6 +9,14 @@ from etl.transform_data import TransformDataClass
 from etl.load_data import LoadDataClass
 
 
+# -----------------------------
+# Initialize and extract data from data folder
 extracted_data = ExtractDataClass().extract()
+
+# -----------------------------
+# Initialize and tranform data, filtering the DataFrame
 tranformed_data = TransformDataClass(extracted_data).transform()
+
+# -----------------------------
+# Initialize and load data into the database
 load_data = LoadDataClass(tranformed_data).load()

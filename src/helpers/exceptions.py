@@ -26,18 +26,3 @@ class FileNotFound(Exception):
 
     def __repr__(self):
         return f"FileNotFound({self.msg})"
-
-
-class DataAlreadyPersisted(Exception):
-    """
-    Data already persist on the database custom exception.
-    """
-
-    def __init__(self):
-        self.msg = "The data has already been persisted. Please, run docker-compose down --volumes to to clear the DB volume."
-
-    def __str__(self):
-        return self.msg
-
-    def __repr__(self):
-        return f"DataAlreadyPersisted({self.msg})"
